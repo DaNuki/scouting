@@ -9,13 +9,13 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     var calls = [];
     var getAllGames = function (resolve, reject) {
-        client.search({
+        games = client.search({
             index: 'games',
             size: 1000,
             body: {
                 query: {
                     match: {
-                        competition: req.query.competition ? req.query.competition : 'houston'
+                        competition: req.query.competition ? req.query.competition : 'district4'
                     }
                 }
             }
@@ -42,8 +42,30 @@ router.get('/', function (req, res, next) {
         });
     };
 
+    var getGameWithGHighestGameId = function (resolve, reject) {
+        games = client.search({
+            index: 'games',
+                body: {
+                    sort: [{ "gameId": { "order": "desc" } }],
+                    size: 1,
+                    query: { match_all: {}}
+                }
+        }, function (error, response, status) {
+            if (error) {
+                console.log("search error: " + error);
+                reject(error);
+            } else {
+                console.log('were here');
+                console.log(response.hits.hits)
+                resolve(response.hits.hits);
+            }
+        });
+    };
+
+
     calls.push(new Promise(getAllGames));
     calls.push(new Promise(getTeamGameData));
+    calls.push(new Promise(getGameWithGHighestGameId));
 
 
     Promise.all(calls)
@@ -60,7 +82,8 @@ router.get('/', function (req, res, next) {
                 Playoffs: games['Playoffs'],
                 importantTeams: importants,
                 reviewedTeams: reviewed,
-                unwantedTeams: unwanted
+                unwantedTeams: unwanted,
+                gameWithGHighestGameId: values[2]
             });
         });
 });
