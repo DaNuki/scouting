@@ -7,7 +7,7 @@ function PickUp() {
         "startTime": Math.round(gameVideo.currentTime - autonomousStartTime),// videoCurrentTime,
         "matchPart": (gameVideo.currentTime - autonomousStartTime) < 15 ? "autonomous" : "teleop",
         "endTime": null,
-        "location": null, // Can be: "low" || "high"
+        "location": null, // Can be: "floor" || "feeder"
         "status": null, // Can be: "success" || "fail"
         "failReason": null, // Can be: TODO: add fail reasons codes for shooting events
         "competition": competition
@@ -19,51 +19,34 @@ var pickup = pickup || PickUp();
 function pickup_start() {
     pickup = PickUp();
     hideAllButtons();
-    pickup_gearOrBall();
+    pickup_type();
 }
 
-function pickup_gearOrBall() {
+function pickup_type() {
     fillEventsDivWithObjects([
         {
             type: 'button',
-            value: 'Gear'
+            value: 'Hatch Panel'
         },
         {
             type: 'button',
-            value: 'Ball'
+            value: 'Cargo'
         }
     ], pickup_location);
 }
 
 function pickup_location(pickup_type) {
     pickup.type = pickup_type;
-    if (pickup_type == 'Gear') {
-        fillEventsDivWithObjects([
-            {
-                type: 'button',
-                value: 'Floor'
-            },
-            {
-                type: 'button',
-                value: 'Feeder'
-            }
-        ], pickup_status);
-    } else if (pickup_type == 'Ball') {
-        fillEventsDivWithObjects([
-            {
-                type: 'button',
-                value: 'Floor'
-            },
-            {
-                type: 'button',
-                value: 'Hopper'
-            },
-            {
-                type: 'button',
-                value: 'Feeder'
-            }
-        ], pickup_status);
-    }
+    fillEventsDivWithObjects([
+        {
+            type: 'button',
+            value: 'Floor'
+        },
+        {
+            type: 'button',
+            value: 'Feeder'
+        }
+    ], pickup_status);
 }
 
 function pickup_status(pickup_location) {
