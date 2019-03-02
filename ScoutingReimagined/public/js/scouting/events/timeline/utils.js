@@ -126,26 +126,26 @@ function getBodyContent(event) {
             return "Robot stuck for " + timeTook + " seconds," +
                 " reason: " + event.reason + ". " +
                 "Eventually, he " + (event.recovered ? "recovered" : "did not recover") + ".";
-        case "shooting":
-            return "Attempted shooting to the " + event.location + " goal. " +
+        case "cycle":
+            return "started cycle " + ". " +
                 "Event " + (event.failReason ? event.failReason : "Succeeded") + "." +
-                " Took " + timeTook + " seconds, started on " + new Date(event.startTime* 1000).toISOString().substr(14, 5) + ".";
-        case "gearplace":
-            return "Attempted placing gear on " + event.location + " bar. " +
+                " Took " + timeTook + " seconds, started on " + new Date(event.startTime * 1000).toISOString().substr(14, 5) + ".";
+        case "place":
+            return "Attempted placing " + event.type + " on " + event.location + ". " +
                 "Event " + (event.failReason ? event.failReason : "Succeeded") + "." +
-                " Took " + timeTook + " seconds, started on " + new Date(event.startTime* 1000).toISOString().substr(14, 5) + ".";
+                " Took " + timeTook + " seconds, started on " + new Date(event.startTime * 1000).toISOString().substr(14, 5) + ".";
         case "climb":
-            return "Attempted climbing. " +
+            return "Attempted climbing " + (event.matchPart == "autonomous" ? "Down. " : "Up. ") +
                 "Event " + (event.failReason ? event.failReason : "Succeeded") + "." +
-                " Took " + timeTook + " seconds, started on " + new Date(event.startTime* 1000).toISOString().substr(14, 5) + ".";
+                " Took " + timeTook + " seconds, started on " + new Date(event.startTime * 1000).toISOString().substr(14, 5) + ".";
         case "chassisFight":
             return (event.initiated ? "Initiated" : "Endured") + " fight. " +
                 "They " + (event.status == 'Success' ? "won" : "lost") + " the fight." +
-                "Fight took " + timeTook + " seconds, started on " + new Date(event.startTime* 1000).toISOString().substr(14, 5) + ".";
+                "Fight took " + timeTook + " seconds, started on " + new Date(event.startTime * 1000).toISOString().substr(14, 5) + ".";
         case "pickup":
             return "Attempted Picking up " + event.type.toLowerCase() + " from the " + event.location.toLowerCase() + "." +
                 "Event " + (event.failReason ? event.failReason : "Succeeded") + "." +
-                "Took " + timeTook + " seconds, started on " + new Date(event.startTime* 1000).toISOString().substr(14, 5) + ".";
+                "Took " + timeTook + " seconds, started on " + new Date(event.startTime * 1000).toISOString().substr(14, 5) + ".";
         case "comment":
             return "Scouter comment: " + event.content;
         default:
@@ -155,10 +155,8 @@ function getBodyContent(event) {
 
 
 function deleteEvent(event) {
-    // console.log('Deleting event: ' + JSON.stringify(event));
-    if (event.eventName == 'comment') {
-        return "Can not delete comment"
-    }
+    console.log('Deleting event: ' + JSON.stringify(event));
+
     return $.ajax({
         type: 'DELETE',
         url: '/event',

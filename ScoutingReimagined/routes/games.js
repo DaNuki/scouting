@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
             body: {
                 query: {
                     match: {
-                        competition: req.query.competition ? req.query.competition : 'district4'
+                        competition: req.query.competition ? req.query.competition : 'district1'
                     }
                 }
             }

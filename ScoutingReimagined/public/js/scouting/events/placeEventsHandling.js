@@ -57,8 +57,7 @@ function place_location(type) {
 }
 function place_side(location) {
     place.location = location;
-    if
-    if (location == "Cargo Airship" && place.type != "Cargo") {
+    if (location == "Cargo Airship") {
         fillEventsDivWithObjects([
             {
                 type: 'button',
@@ -91,24 +90,44 @@ function place_side(location) {
 
 }
 function place_level(side) {
-    if (place.location == 'Cargo Airship') {
-        return place_status(1);
+    if (side == null) {
+        delete place.side;
     }
-    fillEventsDivWithObjects([
-        {
-            type: 'button',
-            value: 1
-        },
-        {
-            type: 'button',
-            value: 2
-        },
-        {
-            type: 'button',
-            value: 3
-        }
+    else {
+        place.side = side;
+    }
+    if (place.location == 'Cargo Airship' && place.side == "Middle") {
+        fillEventsDivWithObjects([
+            {
+                type: 'button',
+                value: 1
+            },
+            {
+                type: 'button',
+                value: 2
+            }
 
-    ], place_status)
+        ], place_status);
+
+    }
+    else {
+        fillEventsDivWithObjects([
+            {
+                type: 'button',
+                value: 1
+            },
+            {
+                type: 'button',
+                value: 2
+            },
+            {
+                type: 'button',
+                value: 3
+            }
+
+        ], place_status);
+
+    }
 }
 function place_status(level) {
     place.level = level;

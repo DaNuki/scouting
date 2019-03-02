@@ -2,7 +2,10 @@ function Comment() {
     return {
         "teamNumber": teamNumber,
         "gameId": gameId,
+        "startTime": Math.round(gameVideo.currentTime - autonomousStartTime), // videoCurrentTime,
+        "endTime": Math.round(gameVideo.currentTime - autonomousStartTime), // videoCurrentTime,
         "eventName": "comment",
+        "timeTook":0,
         "content": null,
         "competition": competition
     }

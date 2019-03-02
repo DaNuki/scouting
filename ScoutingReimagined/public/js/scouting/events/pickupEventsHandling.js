@@ -16,7 +16,7 @@ function PickUp() {
 
 var pickup = pickup || PickUp();
 
-function pickup_start() {
+function pickup_start(iscycle) {
     pickup = PickUp();
     hideAllButtons();
     pickup_type();

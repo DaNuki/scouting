@@ -6,6 +6,7 @@ function Climb() {
         "startTime": Math.round(gameVideo.currentTime - autonomousStartTime), // videoCurrentTime,
         "matchPart": (gameVideo.currentTime - autonomousStartTime) < 15 ? "autonomous" : "teleop",
         "endTime": null,
+        "level": -1,
         "timeTook": null,
         "status": null, // Can be: "success" || "fail"
         "failReason": null, // Can be: TODO: add fail reasons codes for shooting events
@@ -18,18 +19,45 @@ var climb = null;
 function climb_start() {
     climb = Climb();
     hideAllButtons();
-    climb_status();
+    climb_level();
 }
-
-function climb_status() {
-    fillEventsDivWithObjects([{
+function climb_level() {
+    if (climb.matchPart == "autonomous") {
+        fillEventsDivWithObjects([{
             type: 'button',
-            value: 'Success'
+            value: 1
         },
         {
-            type: 'buttonSelect',
-            value: ['Failed because of interruption', 'Failed because of no mechanical lock', 'Failed because of mechanical failure', 'Failed because game ended']
+            type: 'button',
+            value: 2
         }
+        ], climb_status);
+    } else {
+        fillEventsDivWithObjects([{
+            type: 'button',
+            value: 1
+        },
+        {
+            type: 'button',
+            value: 2
+        },
+        {
+            type: 'button',
+            value: 3
+        }
+        ], climb_status);
+    }
+}
+function climb_status(level) {
+    climb.level = level;
+    fillEventsDivWithObjects([{
+        type: 'button',
+        value: 'Success'
+    },
+    {
+        type: 'buttonSelect',
+        value: ['Failed because of interruption', 'Falied because of falling', 'Failed because of mechanical failure', 'Failed because game ended']
+    }
     ], climb_finish);
 }
 

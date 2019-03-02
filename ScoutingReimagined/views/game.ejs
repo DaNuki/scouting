@@ -38,6 +38,9 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <div class="col-sm-2">
+                                    <button id="cycle" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:royalblue" onclick="start_cycle()">Cycle</button>
+                                </div>
+                                <div class="col-sm-2">
                                     <button id="pickup" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:royalblue" onclick="pickup_start()">Pick Up</button>
                                 </div>
                                 <div class="col-sm-2">
@@ -47,7 +50,7 @@
                                     <button id="chassisfight" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:greenyellow" onclick="chassisFight_start()">Fight</button>
                                 </div>
                                 <div class="col-sm-2">
-                                    <button id="climb" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:hotpink" onclick="climb_start()">Climb</button>
+                                    <button id="climb" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:hotpink" onclick="climb_start()">Climb Up/Down</button>
                                 </div>
                                 <div class="col-sm-2">
                                     <button id="stuck" class="btn btn-info btn-block btn-rounded hidden" style="height: 10vh; font-size: xx-large; color:black" onclick="stuck_start()">Stuck</button>
@@ -99,15 +102,15 @@
 <script type="text/javascript" src="/js/scouting/events/pickupEventsHandling.js"></script>
 <script type="text/javascript" src="/js/scouting/events/chassisFightEventsHandling.js"></script>
 <script type="text/javascript" src="/js/scouting/events/climbEventsHandling.js"></script>
+<script type="text/javascript" src="/js/scouting/events/cycleEventHandling.js"></script>
 <script type="text/javascript" src="/js/scouting/events/stuckEventsHandling.js"></script>
 <script type="text/javascript" src="/js/scouting/events/autonomousEventsHandling.js"></script>
 <script type="text/javascript" src="/js/scouting/events/commentsEventHandling.js"></script>
-
 <script type="text/javascript" src="/js/scouting/events/timeline/utils.js"></script>
 
 
 <script>
-    buttonIds = [ 'pickup', 'place', 'chassisfight', 'climb', 'stuck', 'comment'];
+    buttonIds = ['cycle', 'pickup', 'place', 'chassisfight', 'climb', 'stuck', 'comment'];
 
 
     function isFunction(functionToCheck) {
@@ -130,12 +133,13 @@
 
     function initializeButtonClickEvent() {
         buttonClickEvent = {
-            1: pickup_start,
-            2: placeit_start,
-            3: chassisFight_start,
-            4: climb_start,
-            5: stuck_start,
-            5: comment_start
+            1: start_cycle,
+            2: pickup_start,
+            3: placeit_start,
+            4: chassisFight_start,
+            5: climb_start,
+            6: stuck_start,
+            7: comment_start
         }
     }
 
