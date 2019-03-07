@@ -44,8 +44,14 @@ var teamcomparison = require('./routes/teamcomparison')
 var teamgamedata = require('./routes/teamGameData');
 var uploadRouter = require('./routes/upload');
 var setup = require('./lib/elasticsearch/setup');
-setup.setup();
-setTimeout(setup.setup, 45*1000);
+// setup.setup();
+setTimeout(setup.setup, 5*1000);
+setTimeout(setup.setup, 10*1000);
+setTimeout(setup.setup, 20*1000);
+setTimeout(setup.setup, 30*1000);
+setTimeout(setup.setup, 40*1000);
+setTimeout(setup.setup, 50*1000);
+setTimeout(setup.setup, 60*1000);
 
 var app = express();
 
