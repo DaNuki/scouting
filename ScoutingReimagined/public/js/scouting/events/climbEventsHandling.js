@@ -60,6 +60,7 @@ function climb_status(level) {
 
 function climb_finish(climb_status) {
     climb.endTime = Math.round(gameVideo.currentTime - autonomousStartTime);
+    climb.timeTook = climb.endTime - climb.startTime;
     if (climb_status === 'Success') {
         climb.status = climb_status;
         delete climb.failReason; // Prevent ElasticSearch from indexing this value
