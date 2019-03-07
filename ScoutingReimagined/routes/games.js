@@ -53,7 +53,7 @@ router.get('/', function (req, res, next) {
         }, function (error, response, status) {
             if (error) {
                 console.log("search error: " + error);
-                resolve("sorry no games")
+                resolve("sorry no games");
                 // reject(error);
             } else {
                 console.log('were here');

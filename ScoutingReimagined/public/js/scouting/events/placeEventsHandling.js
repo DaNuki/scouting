@@ -9,7 +9,6 @@ function Place() {
         "type": null, //can be: "Hatch Panel" || "Cargo"
         "location": null, // Can be: "Left Rocket" || "Right Rocket" || "Cargo Airship"
         "level": -1, //can be: 1 || 2 || 3 (1||2 if location is Cargo Airship)
-        "side": null, //can be: "Left || Right || Middle [if location is Cargo Airship"] 
         "status": null, // Can be: "success" || "fail"
         "failReason": null, // Can be: TODO: add fail reasons codes for shooting events
         "competition": competition
@@ -21,10 +20,10 @@ var place = null;
 function placeit_start() {
     place = Place();
     hideAllButtons();
-    place_what();
+    _place_what();
 }
 
-function place_what() {
+function _place_what() {
     fillEventsDivWithObjects([
         {
             type: 'button',
@@ -35,10 +34,10 @@ function place_what() {
             value: 'Cargo'
         }
 
-    ], place_location);
+    ], _place_location);
 }
 
-function place_location(type) {
+function _place_location(type) {
     place.type = type;
     fillEventsDivWithObjects([
         {
@@ -51,64 +50,16 @@ function place_location(type) {
         },
         {
             type: 'button',
-            value: 'Cargo Airship'
+            value: 'Cargoship'
         }
-    ], place_side);
+    ], _place_level);
 }
-function place_side(location) {
-    place.location = location;
-    if (location == "Cargo Airship") {
-        fillEventsDivWithObjects([
-            {
-                type: 'button',
-                value: 'Left'
-            },
-            {
-                type: 'button',
-                value: 'Right'
-            },
-            {
-                type: 'button',
-                value: 'Middle'
-            }
-        ], place_level);
-    } else if (place.type != "Cargo") {
-        fillEventsDivWithObjects([
-            {
-                type: 'button',
-                value: 'Left'
-            },
-            {
-                type: 'button',
-                value: 'Right'
-            }
-        ], place_level);
 
-    } else {
-        place_level(null);
-    }
+function _place_level(loc) {
+    place.location = loc
 
-}
-function place_level(side) {
-    if (side == null) {
-        delete place.side;
-    }
-    else {
-        place.side = side;
-    }
-    if (place.location == 'Cargo Airship' && place.side == "Middle") {
-        fillEventsDivWithObjects([
-            {
-                type: 'button',
-                value: 1
-            },
-            {
-                type: 'button',
-                value: 2
-            }
-
-        ], place_status);
-
+    if (place.location == 'Cargoship') {
+        _place_status(1);
     }
     else {
         fillEventsDivWithObjects([
@@ -125,11 +76,11 @@ function place_level(side) {
                 value: 3
             }
 
-        ], place_status);
+        ], _place_status);
 
     }
 }
-function place_status(level) {
+function _place_status(level) {
     place.level = level;
     fillEventsDivWithObjects([
         {
@@ -138,13 +89,15 @@ function place_status(level) {
         },
         {
             type: 'buttonSelect',
-            value: ['Failed because of interruption', 'Failed because of mechanical failure', 'failed because it fell']
+            value: ['Failed because of interruption',
+             'Failed because of mechanical failure',
+             'Failed because driver mistake']
         }
-    ], place_finish)
+    ], _place_finish)
 }
 
 
-function place_finish(status) {
+function _place_finish(status) {
     place.endTime = Math.round(gameVideo.currentTime - autonomousStartTime);
     if (status === 'Success') {
         place.status = status;

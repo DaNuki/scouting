@@ -23,15 +23,8 @@ function climb_start() {
 }
 function climb_level() {
     if (climb.matchPart == "autonomous") {
-        fillEventsDivWithObjects([{
-            type: 'button',
-            value: 1
-        },
-        {
-            type: 'button',
-            value: 2
-        }
-        ], climb_status);
+        alert("Can't climb during autonomous")
+        initializeEvents();
     } else {
         fillEventsDivWithObjects([{
             type: 'button',
@@ -48,6 +41,7 @@ function climb_level() {
         ], climb_status);
     }
 }
+
 function climb_status(level) {
     climb.level = level;
     fillEventsDivWithObjects([{
@@ -56,7 +50,10 @@ function climb_status(level) {
     },
     {
         type: 'buttonSelect',
-        value: ['Failed because of interruption', 'Falied because of falling', 'Failed because of mechanical failure', 'Failed because game ended']
+        value: ['Failed because of interruption', 
+        'Falied because of driver error',
+        'Failed because of mechanical failure',
+        'Failed because game ended']
     }
     ], climb_finish);
 }
